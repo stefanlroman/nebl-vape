@@ -28,7 +28,7 @@ export default function FlavorTile({ flavor, index }: { flavor: Flavor; index: n
         <div
           className="absolute inset-0"
           style={{
-            background: `linear-gradient(180deg, rgba(7,8,11,0.55) 0%, transparent 30%, transparent 55%, var(--bg) 100%), radial-gradient(60% 50% at 75% 20%, color-mix(in srgb, ${color} 30%, transparent), transparent 70%)`,
+            background: `linear-gradient(180deg, rgba(7,8,11,0.5) 0%, transparent 26%, transparent 40%, rgba(7,8,11,0.55) 78%, rgba(7,8,11,0.92) 100%), radial-gradient(60% 50% at 75% 15%, color-mix(in srgb, ${color} 28%, transparent), transparent 70%)`,
           }}
         />
         <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
@@ -43,15 +43,26 @@ export default function FlavorTile({ flavor, index }: { flavor: Flavor; index: n
             </span>
           )}
         </div>
+
+        {/* Lettering lives on the photo now, not in a text block below it. */}
+        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+          <span
+            className="font-mono text-[10px] uppercase tracking-[0.22em]"
+            style={{ color, textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
+          >
+            {flavor.category}
+          </span>
+          <h3
+            className="font-display -mt-0.5 text-2xl leading-[1.02] tracking-tight text-fg transition-transform duration-500 group-hover:-translate-y-0.5 sm:text-3xl"
+            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.9)" }}
+          >
+            {flavor.name}
+          </h3>
+        </div>
       </div>
 
       <div className="relative px-5 pb-5 sm:px-6 sm:pb-6">
-        <h3 className="font-display text-xl leading-tight transition-colors group-hover:text-accent sm:text-2xl">
-          {flavor.name}
-        </h3>
-        <p className="mt-2 font-sans text-sm" style={{ color }}>
-          {flavor.notes.join(" · ")}
-        </p>
+        <p className="pt-4 font-sans text-sm text-fg-muted">{flavor.notes.join(" · ")}</p>
         <div className="mt-4 flex items-center justify-between border-t border-line pt-3">
           <span className="font-mono text-[11px] text-fg-muted">{flavor.intensity}</span>
           <span className="font-mono text-sm text-fg">

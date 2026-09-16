@@ -64,16 +64,27 @@ export default async function FlavorPage({
               <div
                 className="absolute inset-0"
                 style={{
-                  background: `linear-gradient(180deg, rgba(7,8,11,0.35) 0%, transparent 40%, rgba(7,8,11,0.25) 100%), radial-gradient(55% 45% at 72% 78%, color-mix(in srgb, ${color} 22%, transparent), transparent 70%)`,
+                  background: `linear-gradient(180deg, rgba(7,8,11,0.4) 0%, transparent 32%, transparent 50%, rgba(7,8,11,0.9) 100%), radial-gradient(55% 45% at 72% 78%, color-mix(in srgb, ${color} 22%, transparent), transparent 70%)`,
                 }}
               />
+              {/* Lettering lives on the photo, not below it. */}
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                <span
+                  className="font-mono text-xs font-medium uppercase tracking-[0.22em]"
+                  style={{ color, textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
+                >
+                  {categoryLabel}
+                </span>
+                <h1
+                  className="font-display -mt-1 text-4xl leading-[1.02] tracking-tight text-fg sm:text-5xl"
+                  style={{ textShadow: "0 2px 24px rgba(0,0,0,0.75), 0 1px 4px rgba(0,0,0,0.9)" }}
+                >
+                  {flavor.name}
+                </h1>
+              </div>
             </div>
 
-            <span className="font-sans text-sm font-medium" style={{ color }}>
-              {categoryLabel}
-            </span>
-            <h1 className="font-display mt-3 text-4xl sm:text-5xl">{flavor.name}</h1>
-            <p className="mt-2 font-sans text-sm text-fg-muted">{flavor.notes.join(" · ")}</p>
+            <p className="font-sans text-sm text-fg-muted">{flavor.notes.join(" · ")}</p>
             <p className="mt-6 max-w-xl font-sans text-base leading-relaxed text-fg-muted">
               {flavor.description}
             </p>
