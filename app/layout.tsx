@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, IBM_Plex_Mono, Space_Grotesk } from "next/font/google";
+import { Inter, IBM_Plex_Mono, Space_Grotesk, Titan_One } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart-context";
 import { AgeGateProvider } from "@/lib/age-gate";
@@ -25,6 +25,14 @@ const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
 });
 
+// Bold, bubbly display face for the neon "sprayed onto the photo" flavor
+// lettering — deliberately different from the clean space-grotesk headings.
+const titanOne = Titan_One({
+  variable: "--font-titan",
+  subsets: ["latin"],
+  weight: "400",
+});
+
 export const metadata: Metadata = {
   title: "NEBL — 50 Geschmäcker im Nebel",
   description:
@@ -39,7 +47,7 @@ export default function RootLayout({
   return (
     <html lang="de">
       <body
-        className={`${inter.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} antialiased`}
+        className={`${inter.variable} ${ibmPlexMono.variable} ${spaceGrotesk.variable} ${titanOne.variable} antialiased`}
       >
         <LoadingScreen />
         <AgeGateProvider>

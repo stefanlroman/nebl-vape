@@ -95,6 +95,35 @@ body {
   font-family: var(--font-mono);
 }
 
+/* Bubbly, sprayed-on neon lettering for flavor names over their product
+   photo — a deliberately loud, cyberpunk-sticker counterpoint to the
+   clean space-grotesk headings used everywhere else. `--tint` (set inline
+   per card from that flavor's category color) drives the gradient fill and
+   glow so the lettering always picks up a color already present in the
+   photo's own lighting instead of clashing with it. */
+.flavor-title-cyber {
+  display: inline-block;
+  font-family: var(--font-titan), var(--font-display), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
+  transform: rotate(-5deg);
+  transform-origin: left bottom;
+  background: linear-gradient(
+    135deg,
+    #fff 0%,
+    color-mix(in srgb, var(--tint) 55%, white 45%) 30%,
+    var(--tint) 75%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--tint) 85%, transparent))
+    drop-shadow(0 0 14px color-mix(in srgb, var(--tint) 65%, transparent))
+    drop-shadow(0 0 34px color-mix(in srgb, var(--tint) 45%, transparent))
+    drop-shadow(0 3px 3px rgba(0, 0, 0, 0.7));
+}
+
 .ambient-glow {
   position: fixed;
   inset: 0;

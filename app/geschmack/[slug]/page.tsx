@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import {
   flavors,
   getFlavor,
@@ -68,7 +69,7 @@ export default async function FlavorPage({
                 }}
               />
               {/* Lettering lives on the photo, not below it. */}
-              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+              <div className="absolute inset-x-0 bottom-0 p-6 pb-8 sm:p-8 sm:pb-10">
                 <span
                   className="font-mono text-xs font-medium uppercase tracking-[0.22em]"
                   style={{ color, textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
@@ -76,8 +77,8 @@ export default async function FlavorPage({
                   {categoryLabel}
                 </span>
                 <h1
-                  className="font-display -mt-1 text-4xl leading-[1.02] tracking-tight text-fg sm:text-5xl"
-                  style={{ textShadow: "0 2px 24px rgba(0,0,0,0.75), 0 1px 4px rgba(0,0,0,0.9)" }}
+                  className="flavor-title-cyber mt-1 text-5xl sm:text-6xl"
+                  style={{ "--tint": color } as CSSProperties}
                 >
                   {flavor.name}
                 </h1>

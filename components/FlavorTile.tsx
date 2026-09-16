@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Flavor, formatPrice, categoryColors } from "@/lib/flavors";
+import type { CSSProperties } from "react";
+import { Flavor, formatPrice, categories, categoryColors } from "@/lib/flavors";
 import { basePath } from "@/lib/basePath";
 
 const badgeColor: Record<string, string> = {
@@ -11,6 +12,7 @@ const badgeColor: Record<string, string> = {
 
 export default function FlavorTile({ flavor, index }: { flavor: Flavor; index: number }) {
   const color = categoryColors[flavor.category];
+  const categoryLabel = categories.find((c) => c.id === flavor.category)?.label;
 
   return (
     <Link
@@ -45,16 +47,16 @@ export default function FlavorTile({ flavor, index }: { flavor: Flavor; index: n
         </div>
 
         {/* Lettering lives on the photo now, not in a text block below it. */}
-        <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+        <div className="absolute inset-x-0 bottom-0 p-4 pb-5 sm:p-5 sm:pb-7">
           <span
             className="font-mono text-[10px] uppercase tracking-[0.22em]"
             style={{ color, textShadow: "0 1px 8px rgba(0,0,0,0.6)" }}
           >
-            {flavor.category}
+            {categoryLabel}
           </span>
           <h3
-            className="font-display -mt-0.5 text-2xl leading-[1.02] tracking-tight text-fg transition-transform duration-500 group-hover:-translate-y-0.5 sm:text-3xl"
-            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.75), 0 1px 3px rgba(0,0,0,0.9)" }}
+            className="flavor-title-cyber mt-1 text-3xl transition-transform duration-500 group-hover:rotate-[-2deg] sm:text-4xl"
+            style={{ "--tint": color } as CSSProperties}
           >
             {flavor.name}
           </h3>
