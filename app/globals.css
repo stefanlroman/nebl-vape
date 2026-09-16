@@ -1,0 +1,207 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #07080b;
+  --bg-elevated: #0e1116;
+  --fg: #eef2f3;
+  --fg-muted: #7d8894;
+  --line: #1b2028;
+  --accent: #6fe3ff;
+  --accent-dim: #2f7f96;
+  --accent-2: #a07bff;
+  --accent-warm: #ff7a4d;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-dim: var(--accent-dim);
+  --color-accent-2: var(--accent-2);
+  --color-accent-warm: var(--accent-warm);
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-ibm-plex-mono);
+
+  /* shadcn/ui-style aliases, mapped onto the tokens above, so components
+     copied from shadcn-based registries render in the site's own palette
+     instead of their default zinc/black-and-white look. */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--bg);
+  --color-secondary: var(--bg-elevated);
+  --color-secondary-foreground: var(--fg);
+  --color-muted: var(--bg-elevated);
+  --color-muted-foreground: var(--fg-muted);
+  --color-destructive: var(--accent-warm);
+  --color-destructive-foreground: var(--bg);
+  --color-accent-foreground: var(--bg);
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--accent-dim);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dim);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.ambient-glow {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(650px circle at 12% -10%, rgba(111, 227, 255, 0.12), transparent 60%),
+    radial-gradient(550px circle at 92% 5%, rgba(160, 123, 255, 0.1), transparent 60%),
+    radial-gradient(800px circle at 50% 120%, rgba(111, 227, 255, 0.05), transparent 60%);
+}
+
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.capsule {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg-elevated) 80%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.tile-border {
+  border: 1px solid var(--line);
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.tile-border:hover {
+  border-color: var(--accent-dim);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.animate-pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+.flavor-node-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--node-color) 55%, var(--line) 45%);
+  background: color-mix(in srgb, var(--bg) 78%, transparent);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--fg);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.flavor-node-box:hover {
+  transform: scale(1.08);
+  border-color: var(--node-color);
+  background: color-mix(in srgb, var(--bg) 55%, transparent);
+}
+
+.flavor-node-box-name {
+  color: var(--fg-muted);
+}
+
+.flavor-node-box:hover .flavor-node-box-name {
+  color: var(--fg);
+}
+
+.flavor-chip:hover {
+  border-color: var(--chip-hover);
+}
+
+/* Vapor cursor trail — soft blurred blobs, one per trail point, faded via
+   inline opacity from the component. Pure CSS blur instead of canvas so it
+   stays cheap and composited on the GPU. */
+.vapor-trail-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 30;
+  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 55%, transparent) 0%, transparent 70%);
+  filter: blur(6px);
+  will-change: transform, opacity;
+}
