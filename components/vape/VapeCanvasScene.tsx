@@ -3,7 +3,7 @@
 import { Suspense, useCallback, useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import VapeModel from "./VapeModel";
 import VaporVideo from "./VaporVideo";
 
@@ -14,8 +14,11 @@ function PointerParallax({ progressRef }: { progressRef: { current: number } }) 
   useFrame(({ camera, pointer }) => {
     const px = THREE.MathUtils.clamp(pointer.x, -1, 1);
     const py = THREE.MathUtils.clamp(pointer.y, -1, 1);
-    target.current.set(px * 0.35, 0.4 + py * 0.18, 6.2 - progressRef.current * 0.6);
-    camera.position.lerp(target.current, 0.04);
+    // Dolly noticeably closer as scroll/lock progress builds up, so
+    // continuing to scroll reads as "zooming in" on the vape.
+    const zoom = Math.min(1.6, progressRef.current);
+    target.current.set(px * 0.35, 0.4 + py * 0.18 - zoom * 0.08, 6.2 - zoom * 1.7);
+    camera.position.lerp(target.current, 0.05);
     camera.lookAt(0, 0.2, 0);
   });
   return null;
@@ -24,8 +27,11 @@ function PointerParallax({ progressRef }: { progressRef: { current: number } }) 
 function Rig({ lite }: { lite: boolean }) {
   const { scene } = useThree();
   useEffect(() => {
+    // No scene.background here on purpose: the canvas is rendered with
+    // alpha:true so it composites directly onto the page's own --bg
+    // instead of filling a solid rectangle — that solid fill plus the old
+    // vignette were what read as a visible "black box" around the vape.
     scene.fog = new THREE.Fog(new THREE.Color(BG), 7, lite ? 16 : 20);
-    scene.background = new THREE.Color(BG);
   }, [scene, lite]);
   return null;
 }
@@ -39,7 +45,6 @@ function PostFX({ lite }: { lite: boolean }) {
         luminanceSmoothing={0.85}
         mipmapBlur={!lite}
       />
-      <Vignette eskil={false} offset={0.2} darkness={0.85} />
     </EffectComposer>
   );
 }
@@ -99,7 +104,7 @@ export default function VapeCanvasScene({
     <Canvas
       key={canvasKey}
       dpr={lite ? 1 : [1, 1.6]}
-      gl={{ antialias: !lite, alpha: false, powerPreference: "high-performance" }}
+      gl={{ antialias: !lite, alpha: true, powerPreference: "high-performance" }}
       camera={{ fov: 38, near: 0.1, far: 60, position: [0, 0.4, 6.2] }}
       onCreated={({ gl }) => {
         const canvas = gl.domElement;
