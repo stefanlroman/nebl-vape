@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Hero from "@/components/Hero";
 import FlavorWall from "@/components/FlavorWall";
-import FlavorRingSection from "@/components/ring/FlavorRingSection";
+import BestsellerShowcase from "@/components/BestsellerShowcase";
 import FlavorCatalog from "@/components/FlavorCatalog";
 
 export default function Home() {
@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <Hero />
       <FlavorWall />
-      <FlavorRingSection />
+      <BestsellerShowcase />
       <FlavorCatalog />
 
       <section className="relative border-t border-line px-6 py-24 sm:px-10">

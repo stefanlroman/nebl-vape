@@ -1,35 +1,16 @@
 "use client";
 
-import { useRef } from "react";
 import { flavors, categories, categoryColors, type Category } from "@/lib/flavors";
+import { useDragScroll } from "@/lib/useDragScroll";
 import FlavorTile from "./FlavorTile";
 
 const CARD_WIDTH = 300;
 
 function CategoryRow({ categoryId, label }: { categoryId: Category; label: string }) {
-  const scrollerRef = useRef<HTMLDivElement>(null);
   const items = flavors.filter((f) => f.category === categoryId);
   const accent = categoryColors[categoryId];
-
-  const scrollBy = (dir: 1 | -1) => {
-    scrollerRef.current?.scrollBy({ left: dir * (CARD_WIDTH + 16) * 2, behavior: "smooth" });
-  };
-
-  const drag = useRef<{ startX: number; startScroll: number } | null>(null);
-  const onPointerDown = (e: React.PointerEvent) => {
-    if (e.pointerType === "touch") return;
-    const el = scrollerRef.current;
-    if (!el) return;
-    drag.current = { startX: e.clientX, startScroll: el.scrollLeft };
-    el.setPointerCapture(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!drag.current || !scrollerRef.current) return;
-    scrollerRef.current.scrollLeft = drag.current.startScroll - (e.clientX - drag.current.startX);
-  };
-  const endDrag = () => {
-    drag.current = null;
-  };
+  const { scrollerRef, scrollBy, onPointerDown, onPointerMove, endDrag } =
+    useDragScroll(CARD_WIDTH);
 
   return (
     <div className="mb-14">

@@ -182,42 +182,6 @@ body {
   animation: pulse-dot 1.6s ease-in-out infinite;
 }
 
-.flavor-node-box {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--node-color) 55%, var(--line) 45%);
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-  backdrop-filter: blur(6px);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  color: var(--fg);
-  white-space: nowrap;
-  cursor: pointer;
-  transition: transform 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-}
-
-.flavor-node-box:hover {
-  transform: scale(1.08);
-  border-color: var(--node-color);
-  background: color-mix(in srgb, var(--bg) 55%, transparent);
-}
-
-.flavor-node-box-name {
-  color: var(--fg-muted);
-}
-
-.flavor-node-box:hover .flavor-node-box-name {
-  color: var(--fg);
-}
-
-.flavor-chip:hover {
-  border-color: var(--chip-hover);
-}
-
 /* Vapor cursor trail — soft blurred blobs, one per trail point, faded via
    inline opacity from the component. Pure CSS blur instead of canvas so it
    stays cheap and composited on the GPU. */

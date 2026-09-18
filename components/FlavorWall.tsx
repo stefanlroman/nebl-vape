@@ -1,6 +1,7 @@
+import Image from "next/image";
 import Link from "next/link";
-import type { CSSProperties } from "react";
 import { categories, categoryColors, flavors } from "@/lib/flavors";
+import { basePath } from "@/lib/basePath";
 
 export default function FlavorWall() {
   return (
@@ -89,20 +90,36 @@ function MarqueeRow({
         className="animate-marquee flex w-max gap-3"
         style={{
           animationDirection: reverse ? "reverse" : "normal",
-          animationDuration: `${items.length * 4.5}s`,
+          animationDuration: `${items.length * 6}s`,
         }}
       >
         {doubled.map((item, i) => (
           <Link
             key={`${item.slug}-${i}`}
             href={`/geschmack/${item.slug}`}
-            className="flavor-chip flex shrink-0 flex-col gap-0.5 rounded-xl border border-line bg-bg-elevated/40 px-4 py-2.5 transition-colors hover:bg-bg-elevated"
-            style={{ "--chip-hover": color } as CSSProperties}
+            className="tile-border group/chip relative block h-20 w-28 shrink-0 overflow-hidden rounded-xl bg-bg-elevated/40 transition-transform duration-300 hover:-translate-y-0.5 sm:h-24 sm:w-32"
           >
-            <span className="font-sans text-sm text-fg">{item.name}</span>
-            <span className="font-mono text-[10px] text-fg-muted">
-              {item.notes[0]}
-            </span>
+            <Image
+              src={`${basePath}/flavors/${item.slug}.webp`}
+              alt={item.name}
+              fill
+              sizes="128px"
+              className="object-cover transition-transform duration-500 group-hover/chip:scale-110"
+            />
+            <div
+              className="absolute inset-0"
+              style={{
+                background: `linear-gradient(180deg, transparent 30%, rgba(7,8,11,0.85) 100%)`,
+              }}
+            />
+            <div
+              className="absolute inset-x-0 bottom-0 border-t px-2 py-1.5"
+              style={{ borderColor: `color-mix(in srgb, ${color} 45%, transparent)` }}
+            >
+              <span className="block truncate font-sans text-[11px] leading-tight text-fg">
+                {item.name}
+              </span>
+            </div>
           </Link>
         ))}
       </div>
